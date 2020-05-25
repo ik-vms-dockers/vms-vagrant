@@ -1,0 +1,6 @@
+https://github.com/cloudfoundry/bosh-lite/blob/master/docs/README.md
+
+vagrant plugin repair
+vagrant plugin expunge --reinstall
+vagrant plugin update
+

@@ -1,0 +1,22 @@
+
+
+choco feature enable -n=allowGlobalConfirmation
+choco install git -y
+
+choco install babun -y
+choco install googlechrome -y
+choco install visualstudiocode -y
+choco install atom -y
+choco install notepadplusplus -y
+git
+choco install docker
+choco install docker-compose
+babun
+cmder
+choco install notepadplusplus
+
+
+Note: If you don't run this script, the installation will fail.
+Note: To confirm automatically next time, use '-y' or consider:
+choco feature enable -n allowGlobalConfirmation
+

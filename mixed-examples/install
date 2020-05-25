@@ -1,0 +1,13 @@
+sudo apt update && sudo apt install ubuntu-restricted-extras
+
+smplayer
+sudo add-apt-repository ppa:rvm/smplayer
+sudo apt update
+sudo apt install smplayer smtube smplayer-themes smplayer-skins
+
+remove_smplayer() {
+-- revert back the stock version
+-- downgrade the packages installed
+
+sudo apt install ppa-purge && sudo ppa-purge ppa:rvm/smplayer
+}

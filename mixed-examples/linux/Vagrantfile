@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "minimal/trusty64"
+
+config.vm.define 'master', primary: true, autostart: true do |devbox|
+    devbox.vm.hostname = 'linux-training'
+    devbox.vm.network(:private_network, ip: '10.0.0.90')
+
+    devbox.vm.provider :virtualbox do |conf|
+      conf.gui = false
+      conf.customize ['modifyvm', :id, '--usb', 'off']
+      conf.customize ["modifyvm", :id, "--accelerate3d", "on"]
+      conf.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      conf.name = 'linux-admin'
+      conf.cpus = 1
+      conf.memory = 400
+    end
+end
+end

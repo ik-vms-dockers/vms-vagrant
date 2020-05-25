@@ -1,0 +1,7 @@
+Host 10.0.*.*
+    ProxyCommand=ssh -i ~/.ssh/apiteam-eu-west-1.pem -o StrictHostKeyChecking=no -A ec2-user@52.215.36.92 -W %h:%p
+    IdentityFile=~/.ssh/apiteam-eu-west-1.pem
+    ControlMaster=auto
+    ControlPath=~/.ssh/ansible-%r@%h:%p
+    ControlPersist=15m
+    StrictHostKeyChecking=no
