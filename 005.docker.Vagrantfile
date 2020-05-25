@@ -89,18 +89,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9091, host: 9091
   config.vm.network :forwarded_port, guest: 9092, host: 9092
 
-  # config.vm.provider :docker do |v, override|
-  #   override.vm.box = "tknerr/baseimage-ubuntu-#{UBUNTUVERSION}"
-  #   override.vm.box_version = "1.0.0"
-  #   # proxy to get port forwarding working
-  #   v.ports = [ "10800:10800" ]
-  #   v.ports = [ "8080:80" ]
-  #   v.ports = [ "8080:8080" ]
-  #   v.ports = [ "8443:443" ]
-  #   v.ports = [ "443:8443" ]
-  #   v.ports = [ "9090:9090" ]
-  #   v.ports = [ "9091:9091" ]
-  # end
+  config.vm.provider :docker do |v, override|
+    override.vm.box = "tknerr/baseimage-ubuntu-#{UBUNTUVERSION}"
+    override.vm.box_version = "1.0.0"
+    # proxy to get port forwarding working
+    v.ports = [ "10800:10800" ]
+    v.ports = [ "8080:80" ]
+    v.ports = [ "8080:8080" ]
+    v.ports = [ "8443:443" ]
+    v.ports = [ "443:8443" ]
+    v.ports = [ "9090:9090" ]
+    v.ports = [ "9091:9091" ]
+  end
 
   config.vm.provider :virtualbox do |v, override|
     override.vm.box = "bento/ubuntu-#{UBUNTUVERSION}"
