@@ -1,0 +1,3 @@
+<!-- add shh-key to trusted hosts automatically -->
+<!-- ssh-copy-id -i .ssh/id_dsa.pub -o StrictHostKeyChecking=no backup@example.com -->
+StrictHostKeyChecking no

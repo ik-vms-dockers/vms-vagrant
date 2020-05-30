@@ -1,0 +1,8 @@
+[local]
+localhost
+
+[webserver]
+webserver ansible_ssh_host=10.0.0.20 ansible_port=22 ansible_user=ansible
+
+[dbserver]
+db-server

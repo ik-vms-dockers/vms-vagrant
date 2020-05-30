@@ -1,0 +1,8 @@
+ansible -m ping all
+ansible -m ping webserver
+
+-- find memory usage of the machine
+ansible -m shell -a 'free -m' web-server
+
+-- debug
+ansible webserver -m ping -vvv

@@ -1,0 +1,2 @@
+how to run it
+ansible app_servers -i inventory -u ansible -m ping

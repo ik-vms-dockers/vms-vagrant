@@ -1,0 +1,20 @@
+--- # Notification and handling events
+- hosts: bastion-n
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  connection: ssh
+  tasks:
+  - name: install nginx web server
+    apt:
+      name: nginx
+      state: latest
+      update_cache: yes
+    notify:
+    - enable and start the nginx service
+  handlers:
+  - name: enable and start the nginx service
+    service:
+      name: nginx
+      enabled: yes
+      state: restarted

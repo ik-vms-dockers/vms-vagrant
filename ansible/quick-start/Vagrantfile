@@ -1,0 +1,90 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+BOX_IMAGE = 'minimal/xenial64'
+
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote = false
+  end
+
+  config.vm.define 'master', primary: true, autostart: true do |host|
+    host.vm.hostname = 'master-server'
+    # Every Vagrant development environment requires a box. You can search for
+    # boxes at https://atlas.hashicorp.com/search.
+    # config.vm.box = "ubuntu/xenial64"
+    host.vm.box = BOX_IMAGE
+    # Create a private network, which allows host-only access to the machine
+    # using a specific IP.
+    host.vm.network(:private_network, ip: '179.0.0.10')
+
+    host.vm.provider :virtualbox do |vb|
+      vb.gui = false
+      vb.customize ['modifyvm', :id, '--usb', 'off']
+      vb.name = 'host-server'
+      vb.cpus = 1
+      vb.memory = 400
+    end
+
+    host.vm.provision 'shell', path: 'provision/dns-resolution-host.sh', privileged: false
+    host.vm.provision 'shell', path: 'provision/install.sh', privileged: false
+    host.vm.provision 'shell', path: 'provision/ansible-install.sh', privileged: false
+    host.vm.provision 'shell', path: 'provision/ansible.user.sh', privileged: true
+    host.vm.provision 'shell', path: 'provision/cleanup.sh', privileged: true
+  end
+
+  config.vm.define 'bastion', primary: false, autostart: true do |bastion|
+    bastion.vm.hostname = 'bastion'
+    bastion.vm.box = BOX_IMAGE
+    bastion.vm.network(:private_network, ip: '54.171.0.12')
+
+    bastion.vm.provider :virtualbox do |b|
+      b.gui = false
+      b.customize ['modifyvm', :id, '--usb', 'off']
+      b.name = 'bastion'
+      b.cpus = 1
+      b.memory = '200'
+    end
+    bastion.vm.provision 'shell', path: 'provision/install.sh', privileged: false
+    bastion.vm.provision 'shell', path: 'provision/nodes.sudoers.sh', privileged: true
+    bastion.vm.provision 'shell', path: 'provision/cleanup.sh', privileged: true
+  end
+
+  config.vm.define 'webserver', primary: false, autostart: true do |web|
+    web.vm.hostname = 'web-server'
+    web.vm.box = BOX_IMAGE
+    web.vm.network(:private_network, ip: '10.0.0.20')
+
+    web.vm.provider :virtualbox do |wb|
+      wb.gui = false
+      wb.customize ['modifyvm', :id, '--usb', 'off']
+      wb.name = 'webserver'
+      wb.cpus = 1
+      wb.memory = '200'
+    end
+    web.vm.provision 'shell', path: 'provision/install.sh', privileged: false
+    web.vm.provision 'shell', path: 'provision/nodes.sudoers.sh', privileged: true
+    web.vm.provision 'shell', path: 'provision/cleanup.sh', privileged: true
+  end
+
+  # config.vm.define 'dbserver', primary: false, autostart: true do |db|
+  #   db.vm.hostname = 'db-server'
+  #   db.vm.box = BOX_IMAGE
+  #   db.vm.network(:private_network, ip: '10.0.0.30')
+  #
+  #   db.vm.provider :virtualbox do |wb|
+  #     wb.gui = false
+  #     wb.customize ['modifyvm', :id, '--usb', 'off']
+  #     wb.name = 'dbserver'
+  #     wb.cpus = 1
+  #     wb.memory = '200'
+  #   end
+  #   db.vm.provision 'shell', path: 'provision/nodes.sudoers.sh', privileged: true
+  #   # web.vm.provision 'shell', path: 'provision/cleanup.sh', privileged: false
+  # end
+
+end

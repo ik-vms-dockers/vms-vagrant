@@ -1,0 +1,44 @@
+==============ANSIBLE====================
+
+-- ping agains a pattern
+ansible *-n -m ping
+
+-- list everything in folder
+ansible *-n -a "ls -al /home/ansible"
+
+-- execute with sudo priviledges
+sudo ansible *-n -s -a "ls -la /home/root/"
+
+-- copy file from one location to another
+ansible bastion -m copy -a "src=test dest=/tmp/test"
+
+-- install latest version of elinks
+ansible webserver-n -s -m apt -a "name=elinks state=latest"
+
+-- creat user with the password
+ansible bastion-n -s -m user -a "name=test password=1234"
+-- remove user
+ansible bastion-n -s -m user -a "name=test state=absent"
+
+-- run playbook
+ansible-playbook <*.yaml>
+ansible-playbook structure.yaml --check
+
+-- dry run
+--check
+
+-- list hosts
+ansible all --list-hosts
+
+-- gather facts
+ansible webserver-n -m setup
+
+-- filter by some regex
+ansible webserver-n -m setup -a "filter=*ipv4"
+-- gather facts in directory
+ansible bastion -m setup --tree facts
+
+--extra-vars "hosts=webserver-n gather=yes pkg=telnet"
+
+==============VAGRANT====================
+vagrant reload --provision <box-name>

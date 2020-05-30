@@ -1,0 +1,8 @@
+[local]
+localhost
+
+[webserver-n]
+10.0.0.20 ansible_ssh_private_key=/home/ansible/.ssh/ansible_rsa
+
+[bastion-n]
+bastion ansible_ssh_private_key=/home/ansible/.ssh/ansible_rsa

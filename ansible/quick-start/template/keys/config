@@ -1,0 +1,2 @@
+Host *
+ IdentityFile /home/ansible/.ssh/ansible_rsa
