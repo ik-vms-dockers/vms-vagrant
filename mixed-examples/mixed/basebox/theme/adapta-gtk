@@ -1,0 +1,4 @@
+sudo add-apt-repository ppa:tista/adap
+sudo apt update && sudo apt install adapta-gtk-theme -y
+
+sudo apt-get install unity-tweak-tool -y

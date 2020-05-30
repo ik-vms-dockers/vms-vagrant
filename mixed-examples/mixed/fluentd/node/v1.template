@@ -1,0 +1,24 @@
+fluent-bit --help | grep -A5 Interna
+
+[SERVICE]
+    Flush        1
+    Daemon       Off
+    Log_Level    info
+    Parsers_File parsers.conf
+    Log_File     fluent-bit.log
+
+[INPUT]
+    Name Tail
+    Path /home/keyolk/docker.log
+    Parser       docker-daemon
+
+[OUTPUT]
+    Name stdout
+
+
+[PARSER]
+    Name docker-daemon
+    Format regex
+    Regex time="(?<time>[^ ]*)" level=(?<level>[^ ]*) msg="(?<msg>[^ ].*)"
+    Time_Key time
+    Time_Format %Y-%m-%dT%H:%M:%S.%L

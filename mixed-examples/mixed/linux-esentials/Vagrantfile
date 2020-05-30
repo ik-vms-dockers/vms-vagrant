@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# can be changed
+BOX_IMAGE = 'ubuntu/xenial64'
+
+Vagrant.configure("2") do |config|
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = true
+    config.vbguest.no_remote = true
+  end
+
+  config.vm.define 'master', primary: true, autostart: true do |devbox|
+    devbox.vm.hostname = 'linux-esentials'
+    devbox.vm.box = BOX_IMAGE
+    devbox.vm.network(:private_network, ip: '10.0.0.90')
+
+    devbox.vm.provider :virtualbox do |conf|
+      conf.gui = false
+      conf.customize ["modifyvm", :id, "--vram", "10"]
+      conf.customize ['modifyvm', :id, '--usb', 'off']
+      conf.name = 'linux-esentials'
+      conf.cpus = 2
+      conf.memory = 400
+    end
+    # update and upgrade software packages
+    devbox.vm.provision 'shell', path: 'provision/provision.update.sh', privileged: false
+    # # clear the box
+    devbox.vm.provision 'shell', path: 'provision/provision.cleaner.sh', privileged: false
+  end
+end

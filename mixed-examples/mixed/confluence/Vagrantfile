@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# can be changed
+BOX_IMAGE = 'jhcook/osx-elcapitan-10.11'.freeze
+
+Vagrant.configure('2') do |config|
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote = false
+  end
+
+  config.vm.define 'master', primary: true, autostart: true do |devbox|
+    devbox.vm.hostname = 'master'
+    devbox.vm.box = BOX_IMAGE
+    devbox.vm.network(:private_network, ip: '10.0.0.5')
+
+    devbox.vm.provider :virtualbox do |conf|
+      conf.gui = false
+      conf.customize ['modifyvm', :id, '--vram', '10']
+      conf.customize ['modifyvm', :id, '--usb', 'off']
+      conf.name = 'osx_10_11_6'
+      conf.cpus = 2
+      conf.memory = 4000
+    end
+  end
+end

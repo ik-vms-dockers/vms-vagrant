@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# can be changed
+BOX_IMAGE = 'mvbcoding/awslinux'.freeze
+
+Vagrant.configure('2') do |config|
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = false
+    config.vbguest.no_remote = false
+  end
+
+  config.vm.define 'master', primary: true, autostart: true do |devbox|
+    devbox.vm.hostname = 'fluntd-master'
+    devbox.vm.box = BOX_IMAGE
+    devbox.vm.network(:private_network, ip: '10.0.0.5')
+
+    devbox.vm.provider :virtualbox do |conf|
+      conf.gui = false
+      conf.customize ['modifyvm', :id, '--vram', '10']
+      conf.customize ['modifyvm', :id, '--usb', 'off']
+      conf.name = 'aggregator'
+      conf.cpus = 2
+      conf.memory = 400
+    end
+  end
+
+  config.vm.define 'agent', primary: true, autostart: true do |agent|
+    agent.vm.hostname = 'fluentd-agent'
+    agent.vm.box = BOX_IMAGE
+    agent.vm.network(:private_network, ip: '10.0.0.15')
+    agent.vm.network 'forwarded_port', guest: 8181, host: 8080
+
+    agent.vm.provider :virtualbox do |conf|
+      conf.gui = false
+      conf.customize ['modifyvm', :id, '--vram', '10']
+      conf.customize ['modifyvm', :id, '--usb', 'off']
+      conf.name = 'forwarder'
+      conf.cpus = 2
+      conf.memory = 400
+    end
+  end
+end

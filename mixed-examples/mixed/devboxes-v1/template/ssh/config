@@ -1,0 +1,7 @@
+Host *
+ IdentityFile ~/.ssh/pis-shared
+
+ Host 10.0.*.*
+     ProxyCommand=ssh -i ~/.ssh/pis-shared.pem -o StrictHostKeyChecking=no -A ec2-user@BASTION_PUBIP -W %h:%p
+     IdentityFile=~/.ssh/pis-shared.pem
+     StrictHostKeyChecking=no

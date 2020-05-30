@@ -1,0 +1,98 @@
+= *Developer Environment*
+The primary reason for this project, to create an environment with software stack's pre
+installed. Where the Vagrant is a wrapper around the VirtualBox platform.
+
+===== *Prerequesits*
+. Oracle VM installed link:https://www.virtualbox.org/[view]
+. Vagrant installed link:https://www.vagrantup.com/[view]
+
+With a single command
+----
+ vagrant up
+----
+You have a Vagrant setup to launch an insatnce that specified in *Vagrantfile*
+and install a common software package through number of provisioning scripts with
+various dependecies and extra packages. All of this done in about five minutes (the
+first time may take a while, due to fact that box need to be donwloaded from the
+internet) without any user intervetion.
+
+Once setup is complete, you can *ssh* to it.
+----
+ vagrant ssh
+----
+
+Stop a box when needed:
+----
+vagrant halt
+----
+
+Or destroy a box if something go wrong
+----
+vagrant destory -f
+----
+
+=== *SSH Keys*
+Theare are default keys already pre-set for you.
+This commands may help you to see the keys that already provisioned
+----
+ll ~/.ssh
+ssh-add -l
+----
+To add extra keys as default setup. In current project
+----
+cd keys
+cp <public>
+cp <private>
+----
+And update the file
+----
+provision/provision.ssh.sh
+----
+
+There is a default *SSH* config file, that help to connect to instances wia
+bastion host. The bastion *Public IP* can be provided as part of the ssh call.
+----
+ssh <user>@<instance-private-ip>
+----
+
+=== *AWS Setup*
+The AWS Cli can be installed as part of box provisioning.
+There is an option to configure AWS Cli credentials.
+In current project, got to template/aws
+----
+touch credentials
+----
+Copy and paste to file created current config with account keys.
+Do not commit current file to GITLAB.
+----
+[default]
+aws_secret_access_key = SECRET_KEY
+aws_access_key_id = ACCESS_KEY
+----
+
+Now you ready to test AWS CLI
+----
+aws ec2 describe-regions
+----
+
+There should be a response from AWS.
+
+==== Installed Packages
+Just a quick test for
+{sp}+
+which ansible
+{sp}+
+whic fly
+{sp}+
+which pip
+{sp}+
+which python
+{sp}+
+git --version
+{sp}+
+docker --version
+
+.*aws clia access*
+----
+
+----
