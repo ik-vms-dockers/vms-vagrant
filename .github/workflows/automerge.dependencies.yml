@@ -10,7 +10,7 @@ jobs:
 
     # Specifically check that dependabot (or another trusted party) created this pull-request, and that it has been labelled correctly.
     steps:
-    - name: identify actor
+    - name: identify actor & creator
       run: |
         echo "actor: ${{ github.actor }}"
         echo "creator: ${{ github.event.pull_request.user.login }}"
