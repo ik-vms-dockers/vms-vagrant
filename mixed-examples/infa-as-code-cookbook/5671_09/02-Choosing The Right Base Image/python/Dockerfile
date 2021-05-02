@@ -1,2 +1,2 @@
-FROM python:3.5
+FROM python:3.9
 ENTRYPOINT ["/bin/bash"]
