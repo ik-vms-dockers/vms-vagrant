@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     # Specifically check that dependabot (or another trusted party) created this pull-request, and that it has been labelled correctly.
+    if: >
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+        github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
+        github.event.pull_request.user.login == 'renovate[bot]'
     steps:
     - name: identify actor & creator
       run: |
@@ -17,10 +21,5 @@ jobs:
     # Specifically check the creator of the pull-request, not the actor.
     - id: auto-merge-bot
       uses: alexwilson/enable-github-automerge-action@1.0.0
-      if: >
-        github.event.pull_request.user.login == 'dependabot[bot]' ||
-          github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
-          github.event.pull_request.user.login == 'renovate-bot' ||
-          github.event.pull_request.user.login == 'renovate[bot]'
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
