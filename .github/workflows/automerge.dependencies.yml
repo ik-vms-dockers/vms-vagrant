@@ -1,16 +1,26 @@
-name: auto merge dependency updates
+name: auto-merge-dependencies
 
 on:
-  - pull_request
-  - pull_request_review
-  - pull_request_target
+  pull_request_target:
+    types: [labeled]
 
 jobs:
-  run:
+  enable-auto-merge:
     runs-on: ubuntu-latest
+
+    # Specifically check that dependabot (or another trusted party) created this pull-request, and that it has been labelled correctly.
     steps:
-      - name: Merge dependency updates
-        uses: tjenkinson/gh-action-auto-merge-dependency-updates@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          allowed-actors: dependabot-preview[bot], dependabot[bot], renovate[bot]
+    - name: identify actor
+      run: |
+        echo "actor: ${{ github.actor }}"
+        echo "creator: ${{ github.event.pull_request.user.login }}"
+    # Specifically check the creator of the pull-request, not the actor.
+    - id: auto-merge-bot
+      uses: alexwilson/enable-github-automerge-action@1.0.0
+      if: >
+        github.event.pull_request.user.login == 'dependabot[bot]' ||
+          github.event.pull_request.user.login == 'dependabot-preview[bot]' ||
+          github.event.pull_request.user.login == 'renovate-bot' ||
+          github.event.pull_request.user.login == 'renovate[bot]'
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
