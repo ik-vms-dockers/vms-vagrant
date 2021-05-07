@@ -1,2 +1,2 @@
-FROM node:7
+FROM node:16
 ENTRYPOINT ["/bin/bash"]
