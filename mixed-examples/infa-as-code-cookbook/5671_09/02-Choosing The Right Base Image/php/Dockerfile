@@ -1,2 +1,2 @@
-FROM php:7
+FROM php:8
 ENTRYPOINT ["/bin/bash"]
