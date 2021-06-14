@@ -1,2 +1,2 @@
-FROM openjdk:17
+FROM openjdk:18
 ENTRYPOINT ["/bin/bash"]
