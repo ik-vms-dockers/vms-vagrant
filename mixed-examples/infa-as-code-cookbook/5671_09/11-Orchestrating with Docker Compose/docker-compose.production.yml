@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
   wordpress:
-    image: wordpress:5.7
+    image: wordpress:5.9
     environment:
       WORDPRESS_DB_PASSWORD: sup3rs3cur3
       VIRTUAL_HOST: localhost
