@@ -1,4 +1,4 @@
-FROM ruby:3.0
+FROM ruby:3.1
 RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
 RUN apt-get install -qy nodejs && \
   rm -rf /var/lib/apt/* && \
