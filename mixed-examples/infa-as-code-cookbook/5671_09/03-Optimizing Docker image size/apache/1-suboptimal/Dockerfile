@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 RUN apt-get update -y
 RUN apt-get install -y apache2
 RUN rm -rf /var/lib/apt
