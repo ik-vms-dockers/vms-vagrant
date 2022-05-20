@@ -1,2 +1,2 @@
-FROM debian:jessie
+FROM debian:bullseye
 ENTRYPOINT ["/bin/bash"]
