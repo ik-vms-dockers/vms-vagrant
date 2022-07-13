@@ -12,5 +12,5 @@ services:
     links:
       - app
   app:
-    image: ghost:5.2.4
+    image: ghost:5.3.0
     restart: always
