@@ -6,6 +6,6 @@ mod 'php', :local =>true
 mod 'mariadb', :local =>true
 
 # Modules discovered by generate-puppetfile
-mod 'puppet/staging', '2.1.0'
+mod 'puppet/staging', '3.2.0'
 mod 'puppetlabs/mysql', '3.10.0'
 mod 'puppetlabs/stdlib', '4.15.0'
