@@ -1,4 +1,4 @@
-FROM tomcat:10.1.2
+FROM tomcat:10.1.39
 
 RUN apt-get clean && apt-get update -y && apt-get install -y \
 procps \
