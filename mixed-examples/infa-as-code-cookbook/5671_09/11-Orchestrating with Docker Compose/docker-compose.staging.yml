@@ -2,7 +2,7 @@ version: '2'
 
 services:
   wordpress:
-    image: wordpress:6.0
+    image: wordpress:6.9
     environment:
       WORDPRESS_DB_PASSWORD: s3cur3
   mysql:
