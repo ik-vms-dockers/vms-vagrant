@@ -1,2 +1,2 @@
-FROM ruby:3.1
+FROM ruby:3.4
 ENTRYPOINT ["/bin/bash"]
