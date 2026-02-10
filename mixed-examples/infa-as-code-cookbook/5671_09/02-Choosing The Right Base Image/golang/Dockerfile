@@ -1,2 +1,2 @@
-FROM golang:1.18
+FROM golang:1.26
 ENTRYPOINT ["/bin/bash"]
